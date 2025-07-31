@@ -2,6 +2,6 @@
 #define SCREEN_H
 
 void refreshScreen(void);
-void printCharAt(char c, int x, int y);
+void draw(void);
 
 #endif
