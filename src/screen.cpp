@@ -100,7 +100,11 @@ void update_buffer(void){
 	disp_buffer[get_idx(fruit_coords.x, fruit_coords.y)] = fruit_gfx;
 	
 	fruit_coords.x += 1;
-	fruit_coords.x %= WIDTH;
+	if(fruit_coords.x == WIDTH){
+		fruit_coords.x = 0;
+		fruit_coords.y += 1;
+	}
+	fruit_coords.y %= HEIGHT-1; // 0-indexed coords reminder
 }
 
 void render(void){
@@ -110,7 +114,7 @@ void render(void){
 		for(int j = 0; j < WIDTH; j++){
 			int idx = get_idx(j, i);
 			if(disp_buffer[idx] != disp_buffer_prev[idx]){
-				printStringAt(disp_buffer[idx], j, i);
+				printStringAt(disp_buffer[idx], j+1, i+1);
 			}
 		}
 	}
