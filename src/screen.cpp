@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <cstdlib>
 
 #include "screen.h"
@@ -11,6 +12,9 @@ using namespace std;
 const int WIDTH 	= 20; // is doubled later for display
 const int HEIGHT 	= 20;
 
+
+// Empty backdrop
+const string backdrop = "  ";
 
 // Solid boundary block
 const string boundary = "█";
@@ -29,9 +33,17 @@ const string snake_body = "\033[32;40m▒▒\033[m";
 const string fruit_gfx = "\033[91;40m֍ \033[m";
 coords fruit_coords = {0,0};
 
+
+vector<string> disp_buffer(HEIGHT*WIDTH, backdrop);
+vector<string> disp_buffer_prev(HEIGHT*WIDTH, backdrop);
+
+constexpr int get_idx(int x, int y) {
+	return y * WIDTH + x;
+}
+
 // 0-indexed coords sys
 void printStringAt(string a, int x, int y){
-	cout << "\033[" << y+1 << ';' << x+1 << "H" << a;
+	cout << "\033[" << y+1 << ';' << (x*2)+1 << "H" << a;
 }
 
 void refreshScreen(void){
@@ -42,17 +54,14 @@ void refreshScreen(void){
 	#endif
 }
 
-void clearContext(void){
-	for(auto _ = HEIGHT - 2; _-->2;){
-		printStringAt("                                        ", 2, _);
-	}
-}
 
 void initGame(void){
 	// exitGame at exit.
 	atexit(exitGame);
 	
+	// Initial screen cleanup
 	refreshScreen();
+	
 	// Hide cursor
 	cout << "\033[?25l";
 	
@@ -64,7 +73,7 @@ void initGame(void){
 	// Draw sides of boundary box
 	for(int i = 0; i < HEIGHT; i++){
 		printStringAt(boundary+boundary, 0, i);
-		printStringAt(boundary+boundary, (WIDTH*2)+2, i);
+		printStringAt(boundary+boundary, WIDTH+1, i);
 	}
 	
 	// Draw bottom boundary box
@@ -81,26 +90,30 @@ void exitGame(void){
 }
 
 
-int x = 0;
+void update_buffer(void){
+	// Copy current buffer to previous buffer
+	copy(disp_buffer.begin(), disp_buffer.end(), disp_buffer_prev.begin());
+	
+	// Clear up current buffer
+	fill(disp_buffer.begin(), disp_buffer.end(), backdrop);
+	
+	disp_buffer[get_idx(fruit_coords.x, fruit_coords.y)] = fruit_gfx;
+	
+	fruit_coords.x += 1;
+	fruit_coords.x %= WIDTH;
+}
 
-// TO DO
-// solve flickering
-
-void draw(void){
-	// Reset cursor to 1, 1
+void render(void){
 	cout << "\033[2;3H";
+	
 	for(int i = 0; i < HEIGHT; i++){
 		for(int j = 0; j < WIDTH; j++){
-			if(fruit_coords.x == j && fruit_coords.y == i)
-				cout << fruit_gfx;
-			else
-				cout << "  ";
+			int idx = get_idx(j, i);
+			if(disp_buffer[idx] != disp_buffer_prev[idx]){
+				printStringAt(disp_buffer[idx], j, i);
+			}
 		}
-		cout << "\033[" << i+2 << ";3H";
 	}
-	//clearContext();
 	
-	
-	fruit_coords.x += 2;
-	fruit_coords.x %= WIDTH;
+	cout.flush();
 }

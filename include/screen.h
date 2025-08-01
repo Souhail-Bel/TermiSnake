@@ -2,6 +2,9 @@
 #define SCREEN_H
 
 #include <string>
+#include <vector>
+
+using namespace std;
 
 // Dimensions
 extern const int WIDTH;
@@ -14,18 +17,24 @@ typedef struct coords{
 } coords;
 
 // Elements display
-extern const std::string boundary;
-extern const std::string snake_head;
-extern const std::string snake_body;
-extern const std::string fruit_gfx;
+extern const string backdrop;
+extern const string boundary;
+extern const string snake_head;
+extern const string snake_body;
+extern const string fruit_gfx;
 
-// Indiv coords
+// Display buffers
+// Suggested by awss1236
+// MASSIVELY helps with display since terminal I/O is sluggish
+extern vector<string> disp_buffer;
+extern vector<string> disp_buffer_prev;
 
-void printStringAt(std::string a, int x, int y);
+constexpr int get_idx(int x, int y);
+void printStringAt(string a, int x, int y);
 void refreshScreen(void);
-void clearContext(void);
 void initGame(void);
 void exitGame(void);
-void draw(void);
+void update_buffer(void);
+void render(void);
 
 #endif

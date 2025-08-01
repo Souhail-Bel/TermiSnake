@@ -19,7 +19,8 @@ int main(void){
 	
 	initGame();
 	while(is_running){
-		draw();
+		update_buffer();
+		render();
 		
 		// Omitted since it works poorly
 		// usleep((1.0/FRAMERATE)*1e6);
