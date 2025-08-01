@@ -8,14 +8,8 @@ using namespace std;
 
 
 // Dimensions
-const int WIDTH 	= 20; // is doubled later
+const int WIDTH 	= 20; // is doubled later for display
 const int HEIGHT 	= 20;
-
-
-typedef struct coords{
-	int x;
-	int y;
-} coords;
 
 
 // Solid boundary block
