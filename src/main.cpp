@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int FRAMERATE = 60;
+const int FRAMERATE = 20;
 
 bool is_running = false;
 
@@ -14,14 +14,12 @@ int main(void){
 	
 	is_running = true;
 	
-	
-	while(is_running){
-		refreshScreen();
-		printCharAt('#', 1, 5);
-		printCharAt('@', 10, 10);
+	initGame();
+	// while(is_running){
+		// draw();
 		
-		usleep((1.0/FRAMERATE)*1e6);
-	}
+		// usleep((1.0/FRAMERATE)*1e6);
+	// }
 	
 	return 0;
 }
