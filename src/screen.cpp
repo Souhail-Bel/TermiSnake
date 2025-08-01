@@ -12,7 +12,10 @@ const int WIDTH 	= 20; // is doubled later
 const int HEIGHT 	= 20;
 
 
-
+typedef struct coords{
+	int x;
+	int y;
+} coords;
 
 
 // Solid boundary block
@@ -26,9 +29,11 @@ const string boundary = "█";
 // ▒▒▒▒▒▒▓▓  ֍ 
 const string snake_head = "\033[32;40m▓▓\033[m";
 const string snake_body = "\033[32;40m▒▒\033[m";
-// Bright red fruit
-const string fruit = "\033[91;40m֍ \033[m";
 
+
+// Bright red fruit
+const string fruit_gfx = "\033[91;40m֍ \033[m";
+coords fruit_coords = {0,0};
 
 // 0-indexed coords sys
 void printStringAt(string a, int x, int y){
@@ -41,6 +46,12 @@ void refreshScreen(void){
 	#else
 		system("clear");	// Unix
 	#endif
+}
+
+void clearContext(void){
+	for(auto _ = HEIGHT - 2; _-->2;){
+		printStringAt("                                        ", 2, _);
+	}
 }
 
 void initGame(void){
@@ -75,19 +86,27 @@ void exitGame(void){
 	cout << "\033[?25h";
 }
 
-// TODO:
-// Make it so it goes through the entire
-// HEIGHT*WIDTH of the screen
-// if the character is to draw
-	// draw it
-// else
-	// draw space
-// such that I wouldn't have to refresh the screen
-// when I can just overwrite it (Solves flickering)
+
+int x = 0;
+
+// TO DO
+// solve flickering
 
 void draw(void){
 	// Reset cursor to 1, 1
-	cout << "\033[H";
+	cout << "\033[2;3H";
+	for(int i = 0; i < HEIGHT; i++){
+		for(int j = 0; j < WIDTH; j++){
+			if(fruit_coords.x == j && fruit_coords.y == i)
+				cout << fruit_gfx;
+			else
+				cout << "  ";
+		}
+		cout << "\033[" << i+2 << ";3H";
+	}
+	//clearContext();
 	
 	
+	fruit_coords.x += 2;
+	fruit_coords.x %= WIDTH;
 }
