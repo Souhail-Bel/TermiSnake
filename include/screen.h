@@ -10,12 +10,6 @@ using namespace std;
 extern const int WIDTH;
 extern const int HEIGHT;
 
-// Coords def
-typedef struct coords{
-	int x;
-	int y;
-} coords;
-
 // Elements display
 extern const string backdrop;
 extern const string boundary;

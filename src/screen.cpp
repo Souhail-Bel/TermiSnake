@@ -4,6 +4,8 @@
 #include <cstdlib>
 
 #include "screen.h"
+#include "logic.h"
+
 
 using namespace std;
 
@@ -31,7 +33,6 @@ const string snake_body = "\033[32;40m▒▒\033[m";
 
 // Bright red fruit
 const string fruit_gfx = "\033[91;40m֍ \033[m";
-coords fruit_coords = {0,0};
 
 
 vector<string> disp_buffer(HEIGHT*WIDTH, backdrop);
@@ -97,14 +98,10 @@ void update_buffer(void){
 	// Clear up current buffer
 	fill(disp_buffer.begin(), disp_buffer.end(), backdrop);
 	
+	updateFruitCoords();
+	
 	disp_buffer[get_idx(fruit_coords.x, fruit_coords.y)] = fruit_gfx;
 	
-	fruit_coords.x += 1;
-	if(fruit_coords.x == WIDTH){
-		fruit_coords.x = 0;
-		fruit_coords.y += 1;
-	}
-	fruit_coords.y %= HEIGHT-1; // 0-indexed coords reminder
 }
 
 void render(void){
