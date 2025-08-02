@@ -1,6 +1,8 @@
 #ifndef LOGIC_H
 #define LOGIC_H
 
+using namespace std;
+
 // Coords def
 typedef struct coords{
 	int x;
