@@ -2,8 +2,10 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+
 #include <termios.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "screen.h"
 #include "logic.h"
@@ -65,6 +67,8 @@ void nonBlockingInput(void){
 	new_term.c_lflag &= ~(ICANON | ECHO);
 	// TCSANOW: the change should take place immediately
 	tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
+	// Directly modify the file descriptor STDIN_FILENO's operating mode O_NONBLOCK
+    fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
 }
 
 void initGame(void){
