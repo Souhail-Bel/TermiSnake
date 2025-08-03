@@ -101,6 +101,9 @@ void initGame(void){
 	for(auto _ = WIDTH*2 + 4; _--;)
 		cout << boundary;
 	cout << endl;
+	
+	// Controls UI
+	printStringAt("↑↓→← - Move, ✗ - Exit", WIDTH/4, HEIGHT+2);
 }
 
 void restoreInput(void){
