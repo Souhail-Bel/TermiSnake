@@ -88,13 +88,13 @@ void initGame(void){
 	cout << endl;
 	
 	// Draw sides of boundary box
-	for(int i = 0; i < HEIGHT; i++){
+	for(int i = 0; i <= HEIGHT; i++){
 		printStringAt(boundary+boundary, 0, i);
 		printStringAt(boundary+boundary, WIDTH+1, i);
 	}
 	
 	// Draw bottom boundary box
-	printStringAt("", 0, HEIGHT);
+	printStringAt("", 0, HEIGHT+1);
 	for(auto _ = WIDTH*2 + 4; _--;)
 		cout << boundary;
 	cout << endl;
@@ -110,6 +110,7 @@ void restoreInput(void){
 void exitGame(void){
 	// Show  cursor
 	cout << "\033[?25h";
+	refreshScreen();
 	restoreInput();
 }
 
