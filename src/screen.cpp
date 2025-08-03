@@ -64,7 +64,10 @@ void nonBlockingInput(void){
 	tcgetattr(STDIN_FILENO, &orig_term);
 	new_term = orig_term;
 	// Disable canon mode and echo
-	new_term.c_lflag &= ~(ICANON | ECHO);
+	//new_term.c_lflag &= ~(ICANON | ECHO);
+	new_term.c_iflag &= ~(IXON | ICRNL);
+	new_term.c_oflag &= ~(OPOST);
+	new_term.c_lflag &= ~(ECHO | ICANON | ISIG | IEXTEN);
 	// TCSANOW: the change should take place immediately
 	tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
 	// Directly modify the file descriptor STDIN_FILENO's operating mode O_NONBLOCK
@@ -103,7 +106,10 @@ void initGame(void){
 void restoreInput(void){
 	struct termios curr_term;
 	tcgetattr(STDIN_FILENO, &curr_term);
-	curr_term.c_lflag |= (ICANON | ECHO);
+	// curr_term.c_lflag |= (ICANON | ECHO);
+	curr_term.c_iflag |= (IXON | ICRNL);
+	curr_term.c_oflag |= (OPOST);
+	curr_term.c_lflag |= (ECHO | ICANON | ISIG | IEXTEN);
 	tcsetattr(STDIN_FILENO, TCSANOW, &curr_term);
 }
 
