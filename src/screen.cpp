@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+#include <termios.h>
+#include <unistd.h>
 
 #include "screen.h"
 #include "logic.h"
@@ -55,13 +57,23 @@ void refreshScreen(void){
 	#endif
 }
 
+void nonBlockingInput(void){
+	struct termios orig_term, new_term;
+	tcgetattr(STDIN_FILENO, &orig_term);
+	new_term = orig_term;
+	// Disable canon mode and echo
+	new_term.c_lflag &= ~(ICANON | ECHO);
+	// TCSANOW: the change should take place immediately
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
+}
 
 void initGame(void){
-	// exitGame at exit.
-	atexit(exitGame);
 	
 	// Initial screen cleanup
 	refreshScreen();
+	
+	// Set input to non-blocking + other fixes
+	nonBlockingInput();
 	
 	// Hide cursor
 	cout << "\033[?25l";
@@ -84,10 +96,17 @@ void initGame(void){
 	cout << endl;
 }
 
+void restoreInput(void){
+	struct termios curr_term;
+	tcgetattr(STDIN_FILENO, &curr_term);
+	curr_term.c_lflag |= (ICANON | ECHO);
+	tcsetattr(STDIN_FILENO, TCSANOW, &curr_term);
+}
 
 void exitGame(void){
 	// Show  cursor
 	cout << "\033[?25h";
+	restoreInput();
 }
 
 

@@ -5,6 +5,7 @@
 #include <thread>
 
 #include "screen.h"
+#include "logic.h"
 
 using namespace std;
 
@@ -19,6 +20,8 @@ int main(void){
 	
 	initGame();
 	while(is_running){
+		inputHandler();
+		
 		update_buffer();
 		render();
 		
@@ -26,6 +29,7 @@ int main(void){
 		// usleep((1.0/FRAMERATE)*1e6);
 		this_thread::sleep_for(chrono::milliseconds(FRAME_DELAY_MS));
 	}
+	exitGame();
 	
 	return 0;
 }
