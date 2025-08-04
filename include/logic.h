@@ -15,11 +15,13 @@ typedef struct coords{
 
 
 extern coords fruit_coords;
+extern coords snake_head_coords;
 
 extern deque<pair<int, int>> snake_tail;
 extern int snake_size;
 
 void inputHandler(void);
+void updateSnake(void);
 void updateFruitCoords(void);
 
 #endif

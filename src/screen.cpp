@@ -135,12 +135,18 @@ void update_buffer(void){
 	updateFruitCoords();
 	
 	// Fruit display
-	disp_buffer[get_idx(fruit_coords.x, fruit_coords.y)] = fruit_gfx;
+	disp_buffer[
+		get_idx(fruit_coords.x,
+				fruit_coords.y)
+	] = fruit_gfx;
 	
 	// Snake display
-	disp_buffer[get_idx(snake_tail[0].first, snake_tail[0].second)] = snake_head;
+	disp_buffer[
+		get_idx(snake_head_coords.x,
+				snake_head_coords.y)
+	] = snake_head;
 	
-	for(int i = 1; i < snake_size; i++){
+	for(int i = 0; i < snake_size-1; i++){
 		disp_buffer[get_idx(snake_tail[i].first, snake_tail[i].second)] = snake_body;
 	}
 }

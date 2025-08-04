@@ -13,13 +13,23 @@ uniform_int_distribution<> randX(0, WIDTH-1);
 uniform_int_distribution<> randY(0, HEIGHT-1);
 
 coords fruit_coords = {0, 0};
+
+
 deque<pair<int, int>> snake_tail = {
-	{(WIDTH/2)-1, HEIGHT/2},
 	{WIDTH/2, HEIGHT/2},
 	{(WIDTH/2)+1, HEIGHT/2}
 };
+coords snake_head_coords = {(WIDTH/2)-1, HEIGHT/2};
 
 int snake_size = 3;
+
+enum Direction {
+	NONE = 0,
+	UP, DOWN,
+	RIGHT, LEFT
+};
+
+Direction dir = NONE;
 
 
 void inputHandler(void){
@@ -27,11 +37,31 @@ void inputHandler(void){
 	
 	read(STDIN_FILENO, &c, 1);
 	
+	// If not going the opposite direction, follow
+	// X is to exit
 	switch(c) {
-		case 'x': is_running = false; break;
+		case 'z':
+			if(dir != DOWN) 	dir = UP;
+			break;
+		case 's':
+			if(dir != UP) 		dir = DOWN;
+			break;
+		case 'd':
+			if(dir != LEFT) 	dir = RIGHT;
+			break;
+		case 'q':
+			if(dir != RIGHT) 	dir = LEFT;
+			break;
+		case 'x':
+			is_running = false;
+			break;
 	}
 }
 
+
+void updateSnake(void){
+	return;
+}
 
 void updateFruitCoords(void){
 
