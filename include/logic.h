@@ -1,6 +1,8 @@
 #ifndef LOGIC_H
 #define LOGIC_H
 
+#include <deque>
+
 using namespace std;
 
 extern bool is_running;
@@ -13,6 +15,9 @@ typedef struct coords{
 
 
 extern coords fruit_coords;
+
+extern deque<pair<int, int>> snake_tail;
+extern int snake_size;
 
 void inputHandler(void);
 void updateFruitCoords(void);

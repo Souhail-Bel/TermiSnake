@@ -1,5 +1,6 @@
 #include <random>
 #include <unistd.h>
+#include <deque>
 
 #include "logic.h"
 #include "screen.h"
@@ -12,6 +13,13 @@ uniform_int_distribution<> randX(0, WIDTH-1);
 uniform_int_distribution<> randY(0, HEIGHT-1);
 
 coords fruit_coords = {0, 0};
+deque<pair<int, int>> snake_tail = {
+	{(WIDTH/2)-1, HEIGHT/2},
+	{WIDTH/2, HEIGHT/2},
+	{(WIDTH/2)+1, HEIGHT/2}
+};
+
+int snake_size = 3;
 
 
 void inputHandler(void){
