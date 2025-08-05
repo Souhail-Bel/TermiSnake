@@ -146,8 +146,11 @@ void update_buffer(void){
 				snake_head_coords.y)
 	] = snake_head;
 	
-	for(int i = 0; i < snake_size-1; i++){
-		disp_buffer[get_idx(snake_tail[i].first, snake_tail[i].second)] = snake_body;
+	for(auto part : snake_tail){
+		disp_buffer[
+			get_idx(part.first,
+					part.second)
+		] = snake_body;
 	}
 }
 
