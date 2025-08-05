@@ -59,8 +59,12 @@ void inputHandler(void){
 }
 
 
-void updateSnake(void){
-	return;
+void updateSnake(void){	
+	snake_tail.pop_back();
+	snake_tail.push_front(snake_head_coords);
+	
+	++snake_head_coords.x;
+	snake_head_coords.x %= WIDTH;
 }
 
 void updateFruitCoords(void){

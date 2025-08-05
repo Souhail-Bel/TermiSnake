@@ -131,6 +131,8 @@ void update_buffer(void){
 	// Clear up current buffer
 	fill(disp_buffer.begin(), disp_buffer.end(), backdrop);
 	
+	
+	
 	// Get next fruit
 	updateFruitCoords();
 	
@@ -140,18 +142,24 @@ void update_buffer(void){
 				fruit_coords.y)
 	] = fruit_gfx;
 	
-	// Snake display
-	disp_buffer[
-		get_idx(snake_head_coords.x,
-				snake_head_coords.y)
-	] = snake_head;
 	
+	// Move snake logic
+	updateSnake();	
+	
+	
+	// Snake display
+		
 	for(auto part : snake_tail){
 		disp_buffer[
 			get_idx(part.x,
 					part.y)
 		] = snake_body;
 	}
+	
+	disp_buffer[
+		get_idx(snake_head_coords.x,
+				snake_head_coords.y)
+	] = snake_head;
 }
 
 void render(void){
