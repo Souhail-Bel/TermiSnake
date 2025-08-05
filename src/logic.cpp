@@ -17,11 +17,14 @@ coords fruit_coords = {0, 0};
 
 deque<coords> snake_tail = {
 	{WIDTH/2, HEIGHT/2},
-	{(WIDTH/2)+1, HEIGHT/2}
+	{(WIDTH/2)+1, HEIGHT/2},
+	{(WIDTH/2)+2, HEIGHT/2},
+	{(WIDTH/2)+3, HEIGHT/2},
+	{(WIDTH/2)+4, HEIGHT/2}
 };
 coords snake_head_coords = {(WIDTH/2)-1, HEIGHT/2};
 
-int snake_size = 3;
+int snake_size = snake_tail.size()-1;
 
 enum Direction {
 	NONE = 0,
@@ -72,8 +75,7 @@ void updateSnake(void){
 	// This means that the signs are switched for the y-axis
 	switch(dir){
 		case UP:
-			--snake_head_coords.y;
-			if(snake_head_coords.y < 0) snake_head_coords.y = HEIGHT-1;
+			if(--snake_head_coords.y < 0) snake_head_coords.y = HEIGHT-1;
 			break;
 		case DOWN:
 			++snake_head_coords.y;
@@ -82,10 +84,14 @@ void updateSnake(void){
 			++snake_head_coords.x;
 			break;
 		case LEFT:
-			--snake_head_coords.x;
-			if(snake_head_coords.x < 0) snake_head_coords.x = WIDTH-1;
+			if(--snake_head_coords.x < 0) snake_head_coords.x = WIDTH-1;
 			break;
 	}
+	
+	// Self collision check
+	for(auto part : snake_tail)
+		if(part.x == snake_head_coords.x && part.y == snake_head_coords.y)
+			is_running = false;
 	
 	snake_head_coords.x %= WIDTH;
 	snake_head_coords.y %= HEIGHT;

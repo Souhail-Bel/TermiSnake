@@ -103,7 +103,7 @@ void initGame(void){
 	cout << endl;
 	
 	// Controls UI
-	printStringAt("WASD - Move, ✗ - Exit", WIDTH/4, HEIGHT+2);
+	printStringAt("WASD - Move, ✗ - Exit", 1, HEIGHT+2);
 }
 
 void restoreInput(void){
