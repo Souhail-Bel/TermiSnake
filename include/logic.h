@@ -17,7 +17,7 @@ typedef struct coords{
 extern coords fruit_coords;
 extern coords snake_head_coords;
 
-extern deque<pair<int, int>> snake_tail;
+extern deque<coords> snake_tail;
 extern int snake_size;
 
 void inputHandler(void);

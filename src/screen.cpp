@@ -148,8 +148,8 @@ void update_buffer(void){
 	
 	for(auto part : snake_tail){
 		disp_buffer[
-			get_idx(part.first,
-					part.second)
+			get_idx(part.x,
+					part.y)
 		] = snake_body;
 	}
 }
