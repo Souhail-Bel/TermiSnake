@@ -24,7 +24,6 @@ deque<coords> snake_tail = {
 };
 coords snake_head_coords = {(WIDTH/2)-1, HEIGHT/2};
 
-int snake_size = snake_tail.size()-1;
 
 enum Direction {
 	NONE = 0,

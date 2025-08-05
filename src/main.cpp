@@ -14,6 +14,8 @@ constexpr int FRAME_DELAY_MS = (1.0/FRAMERATE)*1e3;
 
 bool is_running = false;
 
+int snake_size = snake_tail.size()-1;
+
 int main(void){
 	
 	is_running = true;
@@ -30,6 +32,9 @@ int main(void){
 		this_thread::sleep_for(chrono::milliseconds(FRAME_DELAY_MS));
 	}
 	exitGame();
+	
+	cout << "Game over!" << endl;
+	cout << "YOUR SCORE: " << snake_size * 10;
 	
 	return 0;
 }
