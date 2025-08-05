@@ -103,7 +103,7 @@ void initGame(void){
 	cout << endl;
 	
 	// Controls UI
-	printStringAt("↑↓→← - Move, ✗ - Exit", WIDTH/4, HEIGHT+2);
+	printStringAt("WASD - Move, ✗ - Exit", WIDTH/4, HEIGHT+2);
 }
 
 void restoreInput(void){
@@ -134,13 +134,13 @@ void update_buffer(void){
 	
 	
 	// Get next fruit
-	updateFruitCoords();
+	// updateFruitCoords();
 	
 	// Fruit display
-	disp_buffer[
-		get_idx(fruit_coords.x,
-				fruit_coords.y)
-	] = fruit_gfx;
+	// disp_buffer[
+		// get_idx(fruit_coords.x,
+				// fruit_coords.y)
+	// ] = fruit_gfx;
 	
 	
 	// Move snake logic

@@ -40,7 +40,7 @@ void inputHandler(void){
 	// If not going the opposite direction, follow
 	// X is to exit
 	switch(c) {
-		case 'z':
+		case 'w':
 			if(dir != DOWN) 	dir = UP;
 			break;
 		case 's':
@@ -49,7 +49,7 @@ void inputHandler(void){
 		case 'd':
 			if(dir != LEFT) 	dir = RIGHT;
 			break;
-		case 'q':
+		case 'a':
 			if(dir != RIGHT) 	dir = LEFT;
 			break;
 		case 'x':
@@ -60,11 +60,35 @@ void inputHandler(void){
 
 
 void updateSnake(void){	
-	snake_tail.pop_back();
-	snake_tail.push_front(snake_head_coords);
+	// [[likely]] is C++20 since, but the std here is C++11
+	// So we're using the GCC/Clang __builtin_expect function instead
+	if(__builtin_expect(dir != NONE, 1)){
+		snake_tail.pop_back();
+		snake_tail.push_front(snake_head_coords);
+	}
 	
-	++snake_head_coords.x;
+	
+	// Reminder that (0,0) is on the top left
+	// This means that the signs are switched for the y-axis
+	switch(dir){
+		case UP:
+			--snake_head_coords.y;
+			if(snake_head_coords.y < 0) snake_head_coords.y = HEIGHT-1;
+			break;
+		case DOWN:
+			++snake_head_coords.y;
+			break;
+		case RIGHT:
+			++snake_head_coords.x;
+			break;
+		case LEFT:
+			--snake_head_coords.x;
+			if(snake_head_coords.x < 0) snake_head_coords.x = WIDTH-1;
+			break;
+	}
+	
 	snake_head_coords.x %= WIDTH;
+	snake_head_coords.y %= HEIGHT;
 }
 
 void updateFruitCoords(void){
