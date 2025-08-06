@@ -138,13 +138,13 @@ void update_buffer(void){
 	// updateFruitCoords();
 	
 	// Fruit display
-	// disp_buffer[
-		// get_idx(fruit_coords.x,
-				// fruit_coords.y)
-	// ] = fruit_gfx;
+	disp_buffer[
+		get_idx(fruit_coords.x,
+				fruit_coords.y)
+	] = fruit_gfx;
 	
 	
-	// Move snake logic
+	// Move snake + fruit logic
 	updateSnake();	
 	
 	

@@ -69,6 +69,11 @@ void updateSnake(void){
 		snake_tail.push_front(snake_head_coords);
 	}
 	
+	// Most of the time is spent with the snake moving through the void
+	if(__builtin_expect(snake_head_coords.x == fruit_coords.x
+						&& snake_head_coords.y == fruit_coords.y, 0))
+		updateFruitCoords();
+	
 	
 	// Reminder that (0,0) is on the top left
 	// This means that the signs are switched for the y-axis
