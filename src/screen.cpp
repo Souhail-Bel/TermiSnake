@@ -3,9 +3,13 @@
 #include <vector>
 #include <cstdlib>
 
-#include <termios.h>
+
 #include <unistd.h>
 #include <fcntl.h>
+
+#ifndef _WIN32
+	#include <termios.h>
+#endif
 
 #include "screen.h"
 #include "logic.h"
@@ -60,6 +64,7 @@ void refreshScreen(void){
 }
 
 void nonBlockingInput(void){
+	#ifndef _WIN32
 	struct termios orig_term, new_term;
 	tcgetattr(STDIN_FILENO, &orig_term);
 	new_term = orig_term;
@@ -72,6 +77,7 @@ void nonBlockingInput(void){
 	tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
 	// Directly modify the file descriptor STDIN_FILENO's operating mode O_NONBLOCK
     fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
+	#endif
 }
 
 void initGame(void){
@@ -107,6 +113,7 @@ void initGame(void){
 }
 
 void restoreInput(void){
+	#ifndef _WIN32
 	struct termios curr_term;
 	tcgetattr(STDIN_FILENO, &curr_term);
 	// curr_term.c_lflag |= (ICANON | ECHO);
@@ -114,6 +121,7 @@ void restoreInput(void){
 	curr_term.c_oflag |= (OPOST);
 	curr_term.c_lflag |= (ECHO | ICANON | ISIG | IEXTEN);
 	tcsetattr(STDIN_FILENO, TCSANOW, &curr_term);
+	#endif
 }
 
 void exitGame(void){
