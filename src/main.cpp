@@ -9,7 +9,7 @@
 
 using namespace std;
 
-const int FRAMERATE = 10;
+const int FRAMERATE = 20;
 constexpr int FRAME_DELAY_MS = (1.0/FRAMERATE)*1e3;
 
 bool is_running = false;

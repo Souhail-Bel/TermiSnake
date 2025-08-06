@@ -1,6 +1,7 @@
 #include <random>
 #include <unistd.h>
 #include <deque>
+#include <iostream>
 
 #include "logic.h"
 #include "screen.h"
@@ -72,7 +73,12 @@ void updateSnake(void){
 	// Most of the time is spent with the snake moving through the void
 	if(__builtin_expect(snake_head_coords.x == fruit_coords.x
 						&& snake_head_coords.y == fruit_coords.y, 0)){
+		
+		// Make sound
+		std::cout << '\a';
+		
 		updateFruitCoords();
+		
 		snake_tail.push_front(snake_head_coords);
 		++snake_size;
 	}
