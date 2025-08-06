@@ -18,9 +18,9 @@ coords fruit_coords = {0, 0};
 deque<coords> snake_tail = {
 	{WIDTH/2, HEIGHT/2},
 	{(WIDTH/2)+1, HEIGHT/2},
-	{(WIDTH/2)+2, HEIGHT/2},
-	{(WIDTH/2)+3, HEIGHT/2},
-	{(WIDTH/2)+4, HEIGHT/2}
+	// {(WIDTH/2)+2, HEIGHT/2},
+	// {(WIDTH/2)+3, HEIGHT/2},
+	// {(WIDTH/2)+4, HEIGHT/2}
 };
 coords snake_head_coords = {(WIDTH/2)-1, HEIGHT/2};
 
@@ -69,7 +69,13 @@ void updateSnake(void){
 		snake_tail.push_front(snake_head_coords);
 	}
 	
-	
+	// Most of the time is spent with the snake moving through the void
+	if(__builtin_expect(snake_head_coords.x == fruit_coords.x
+						&& snake_head_coords.y == fruit_coords.y, 0)){
+		updateFruitCoords();
+		snake_tail.push_front(snake_head_coords);
+		++snake_size;
+	}
 	
 	// Reminder that (0,0) is on the top left
 	// This means that the signs are switched for the y-axis
@@ -96,11 +102,6 @@ void updateSnake(void){
 	snake_head_coords.x %= WIDTH;
 	snake_head_coords.y %= HEIGHT;
 	
-	
-	// Most of the time is spent with the snake moving through the void
-	if(__builtin_expect(snake_head_coords.x == fruit_coords.x
-						&& snake_head_coords.y == fruit_coords.y, 0))
-		updateFruitCoords();
 }
 
 void updateFruitCoords(void){

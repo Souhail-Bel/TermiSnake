@@ -14,7 +14,7 @@ constexpr int FRAME_DELAY_MS = (1.0/FRAMERATE)*1e3;
 
 bool is_running = false;
 
-int snake_size = snake_tail.size()-1;
+int snake_size = snake_tail.size();
 
 int main(void){
 	

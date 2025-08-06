@@ -103,8 +103,7 @@ void initGame(void){
 	cout << endl;
 	
 	// Controls UI
-	printStringAt("WASD - Move, ✗ - Exit        SCORE:", 1, HEIGHT+2);
-	cout << snake_size*10;
+	printStringAt("WASD - Move, ✗ - Exit      SCORE:", 1, HEIGHT+2);
 }
 
 void restoreInput(void){
@@ -174,6 +173,9 @@ void render(void){
 			}
 		}
 	}
+	
+	printStringAt("", WIDTH*9/10, HEIGHT+2);
+	cout << snake_size*10;
 	
 	cout.flush();
 }
