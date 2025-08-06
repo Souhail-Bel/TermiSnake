@@ -42,7 +42,7 @@ void inputHandler(void){
 	// If not going the opposite direction, follow
 	// X is to exit
 	switch(c) {
-		case 'w':
+		case 'w': case 'z':
 			if(dir != DOWN) 	dir = UP;
 			break;
 		case 's':
@@ -51,7 +51,7 @@ void inputHandler(void){
 		case 'd':
 			if(dir != LEFT) 	dir = RIGHT;
 			break;
-		case 'a':
+		case 'a': case 'q':
 			if(dir != RIGHT) 	dir = LEFT;
 			break;
 		case 'x':
@@ -69,10 +69,6 @@ void updateSnake(void){
 		snake_tail.push_front(snake_head_coords);
 	}
 	
-	// Most of the time is spent with the snake moving through the void
-	if(__builtin_expect(snake_head_coords.x == fruit_coords.x
-						&& snake_head_coords.y == fruit_coords.y, 0))
-		updateFruitCoords();
 	
 	
 	// Reminder that (0,0) is on the top left
@@ -99,6 +95,12 @@ void updateSnake(void){
 	
 	snake_head_coords.x %= WIDTH;
 	snake_head_coords.y %= HEIGHT;
+	
+	
+	// Most of the time is spent with the snake moving through the void
+	if(__builtin_expect(snake_head_coords.x == fruit_coords.x
+						&& snake_head_coords.y == fruit_coords.y, 0))
+		updateFruitCoords();
 }
 
 void updateFruitCoords(void){
