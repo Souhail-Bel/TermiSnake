@@ -9,6 +9,8 @@
 
 #ifndef _WIN32
 	#include <termios.h>
+#else
+	#include <conio.h>
 #endif
 
 #include "screen.h"

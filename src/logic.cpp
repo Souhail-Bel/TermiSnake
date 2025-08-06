@@ -3,6 +3,10 @@
 #include <deque>
 #include <iostream>
 
+#ifdef _WIN32
+	#include <conio.h>
+#endif
+
 #include "logic.h"
 #include "screen.h"
 
@@ -38,7 +42,12 @@ Direction dir = NONE;
 void inputHandler(void){
 	char c = 0;
 	
-	read(STDIN_FILENO, &c, 1);
+	#ifdef _WIN32
+		if(_kbhit()) // Check key hit
+			c = _getch(); // Get char
+	#else
+		read(STDIN_FILENO, &c, 1);
+	#endif
 	
 	// If not going the opposite direction, follow
 	// X is to exit
